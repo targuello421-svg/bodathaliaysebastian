@@ -7,14 +7,10 @@ const CONFIG = {
   // Fecha y hora de la boda (Bogotá = UTC-5)
   weddingDate: '2026-10-28T17:00:00-05:00',
 
-  // URL del Web App de Google Apps Script donde se guardan las confirmaciones.
-  // Sigue los pasos de RSVP_SETUP.md y pega aquí la URL que termina en /exec
-  rsvpEndpoint: '',
-
-  // Números de WhatsApp que reciben las confirmaciones.
-  // Formato internacional SIN '+' ni espacios. El 1º recibe siempre;
-  // el invitado puede avisar al 2º con un toque extra.
-  whatsapp: ['34666842978', '34670427577'],
+  // Web3Forms: cada confirmación llega por email automáticamente.
+  // El correo principal va ligado a la cuenta (targuello421@gmail.com).
+  web3formsKey: '004a142d-0097-4dcd-b6b0-68f493baf1e4',
+  ccEmail: 'sebastian@bookahospi.com', // segundo destinatario (copia)
 };
 
 /* ============================================================
@@ -242,51 +238,40 @@ const QUIZ = [
     if (!name) { showFeedback('Escribe tu nombre, porfa. 🙏', false); return; }
     if (!attend) { showFeedback('Dinos si podrás venir. 🙏', false); return; }
 
-    const attendTxt = attend === 'si' ? 'Sí' : 'No';
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando…';
 
-    // Opción A (recomendada): guardar en la Hoja de Google.
-    if (CONFIG.rsvpEndpoint) {
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Enviando…';
-      try {
-        const body = new URLSearchParams({ name, attend: attendTxt, message });
-        // Apps Script no devuelve cabeceras CORS: usamos no-cors (envío "a ciegas", sin leer respuesta).
-        await fetch(CONFIG.rsvpEndpoint, {
-          method: 'POST',
-          mode: 'no-cors',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8' },
-          body: body.toString(),
-        });
+    const payload = {
+      access_key: CONFIG.web3formsKey,
+      subject: `Confirmación boda — ${name}`,
+      from_name: 'Web boda Sebastián & Thalía',
+      Nombre: name,
+      Asistencia: attend === 'si' ? 'Sí, ahí estaré ✅' : 'No puede ir ❌',
+      Mensaje: message || '(sin mensaje)',
+    };
+    if (CONFIG.ccEmail) payload.ccemail = CONFIG.ccEmail;
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (data.success) {
         const msg = attend === 'si'
-          ? '¡Gracias! Hemos guardado tu confirmación. Nos vemos el 28. 💕'
+          ? '¡Gracias! Hemos recibido tu confirmación. Nos vemos el 28. 💕'
           : 'Gracias por avisar. Te echaremos de menos. 💛';
         showFeedback(msg, true);
         form.querySelectorAll('input, textarea, button').forEach((el) => (el.disabled = true));
-      } catch (err) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Confirmar asistencia';
-        showFeedback('Ups, no se pudo enviar. Revisa tu conexión e inténtalo otra vez. 🙏', false);
+      } else {
+        throw new Error(data.message || 'error');
       }
-      return;
+    } catch (err) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Confirmar asistencia';
+      showFeedback('Ups, no se pudo enviar. Revisa tu conexión e inténtalo otra vez. 🙏', false);
     }
-
-    // Confirmación por WhatsApp a los novios.
-    const text =
-      `*Confirmación de boda*%0A` +
-      `Nombre: ${encodeURIComponent(name)}%0A` +
-      `Asistencia: ${encodeURIComponent(attend === 'si' ? '✅ Ahí estaré' : '❌ No puedo ir')}` +
-      (message ? `%0AMensaje: ${encodeURIComponent(message)}` : '');
-    const nums = [].concat(CONFIG.whatsapp);
-    window.open(`https://wa.me/${nums[0]}?text=${text}`, '_blank');
-
-    feedback.hidden = false;
-    feedback.style.color = '#3f6b3a';
-    feedback.style.background = 'rgba(143,185,138,0.14)';
-    feedback.innerHTML = '¡Gracias! Se abrió WhatsApp para enviar tu confirmación. 💌' +
-      (nums[1]
-        ? `<br><a class="rsvp__second" href="https://wa.me/${nums[1]}?text=${text}" target="_blank" rel="noopener noreferrer">Enviar también a la otra persona &rarr;</a>`
-        : '');
-    submitBtn.disabled = true;
   });
 
   function showFeedback(msg, ok) {
