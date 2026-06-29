@@ -11,9 +11,10 @@ const CONFIG = {
   // Sigue los pasos de RSVP_SETUP.md y pega aquí la URL que termina en /exec
   rsvpEndpoint: '',
 
-  // WhatsApp de respaldo: se usa SOLO si rsvpEndpoint está vacío.
-  // Formato internacional SIN '+' ni espacios. Ej: 573001234567 (Colombia)
-  whatsapp: '34600000000',
+  // Números de WhatsApp que reciben las confirmaciones.
+  // Formato internacional SIN '+' ni espacios. El 1º recibe siempre;
+  // el invitado puede avisar al 2º con un toque extra.
+  whatsapp: ['34666842978', '34670427577'],
 };
 
 /* ============================================================
@@ -269,14 +270,22 @@ const QUIZ = [
       return;
     }
 
-    // Respaldo: sin endpoint configurado → WhatsApp a los novios.
+    // Confirmación por WhatsApp a los novios.
     const text =
       `*Confirmación de boda*%0A` +
       `Nombre: ${encodeURIComponent(name)}%0A` +
       `Asistencia: ${encodeURIComponent(attend === 'si' ? '✅ Ahí estaré' : '❌ No puedo ir')}` +
       (message ? `%0AMensaje: ${encodeURIComponent(message)}` : '');
-    window.open(`https://wa.me/${CONFIG.whatsapp}?text=${text}`, '_blank');
-    showFeedback('¡Gracias! Se abrirá WhatsApp para enviar tu confirmación. 💌', true);
+    const nums = [].concat(CONFIG.whatsapp);
+    window.open(`https://wa.me/${nums[0]}?text=${text}`, '_blank');
+
+    feedback.hidden = false;
+    feedback.style.color = '#3f6b3a';
+    feedback.style.background = 'rgba(143,185,138,0.14)';
+    feedback.innerHTML = '¡Gracias! Se abrió WhatsApp para enviar tu confirmación. 💌' +
+      (nums[1]
+        ? `<br><a class="rsvp__second" href="https://wa.me/${nums[1]}?text=${text}" target="_blank" rel="noopener noreferrer">Enviar también a la otra persona &rarr;</a>`
+        : '');
     submitBtn.disabled = true;
   });
 
