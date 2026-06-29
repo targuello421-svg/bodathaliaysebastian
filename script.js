@@ -107,11 +107,6 @@ const QUIZ = [
     correct: 2, // Salamanca  ('Bogotá' = opción de relleno, cámbiala si quieres)
   },
   {
-    q: '"Nuestra canción" es de…',
-    options: ['El Kanka', 'Manu Chao', 'Jorge Drexler', 'Rozalén'],
-    correct: 0, // El Kanka
-  },
-  {
     q: '¿A quién esperan con más anhelo en su boda?',
     options: ['A ti, te esperamos con mucho cariño'],
     correct: 0, // única respuesta — el cierre bonito del juego
