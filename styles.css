@@ -298,6 +298,7 @@ body {
    DETALLES
    ============================================================ */
 .detalles .section__title { margin-bottom: 34px; }
+.detail-card--extra { margin-top: 18px; }
 .detail-card {
   max-width: 560px;
   margin: 0 auto;
