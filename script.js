@@ -262,6 +262,7 @@ const QUIZ = [
           ? '¡Gracias! Hemos recibido tu confirmación. Nos vemos el 28. 💕'
           : 'Gracias por avisar. Te echaremos de menos. 💛';
         showFeedback(msg, true);
+        submitBtn.textContent = '¡Enviado! ✓';
         form.querySelectorAll('input, textarea, button').forEach((el) => (el.disabled = true));
       } else {
         throw new Error(data.message || 'error');
