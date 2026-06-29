@@ -295,24 +295,6 @@ body {
 }
 
 /* ============================================================
-   FOTO
-   ============================================================ */
-.foto { padding-top: 0; }
-.foto-frame {
-  max-width: 380px;
-  margin: 0 auto;
-  padding: 10px;
-  background: var(--card);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-}
-.foto-frame img {
-  width: 100%;
-  display: block;
-  border-radius: 12px;
-}
-
-/* ============================================================
    DETALLES
    ============================================================ */
 .detalles .section__title { margin-bottom: 34px; }
