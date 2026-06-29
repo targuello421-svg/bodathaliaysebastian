@@ -54,16 +54,9 @@ const CONFIG = {
   if (!box) return;
   function play() {
     const id = box.dataset.videoId;
-    if (!id || id === 'REEMPLAZA_VIDEO_ID') {
-      alert('Pega el ID del vídeo de YouTube en index.html (data-video-id).');
-      return;
-    }
-    const iframe = document.createElement('iframe');
-    iframe.src = `https://www.youtube.com/embed/${id}?autoplay=1&rel=0&playsinline=1`;
-    iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-    iframe.allowFullscreen = true;
-    box.innerHTML = '';
-    box.appendChild(iframe);
+    if (!id || id === 'REEMPLAZA_VIDEO_ID') return;
+    // El vídeo oficial tiene la inserción desactivada → lo abrimos en YouTube.
+    window.open(`https://www.youtube.com/watch?v=${id}`, '_blank', 'noopener');
   }
   box.addEventListener('click', play);
   box.addEventListener('keydown', (e) => {
