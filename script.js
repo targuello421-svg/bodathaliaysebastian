@@ -7,10 +7,10 @@ const CONFIG = {
   // Fecha y hora de la boda (Bogotá = UTC-5)
   weddingDate: '2026-10-28T17:00:00-05:00',
 
-  // Web3Forms: cada confirmación llega por email automáticamente.
-  // El correo principal va ligado a la cuenta (targuello421@gmail.com).
+  // Web3Forms: cada confirmación llega por email automáticamente a
+  // targuello421@gmail.com (correo ligado a la cuenta).
+  // Nota: enviar a un 2º correo (ccemail) requiere plan Pro de Web3Forms.
   web3formsKey: '004a142d-0097-4dcd-b6b0-68f493baf1e4',
-  ccEmail: 'sebastian@bookahospi.com', // segundo destinatario (copia)
 };
 
 /* ============================================================
@@ -249,7 +249,6 @@ const QUIZ = [
       Asistencia: attend === 'si' ? 'Sí, ahí estaré ✅' : 'No puede ir ❌',
       Mensaje: message || '(sin mensaje)',
     };
-    if (CONFIG.ccEmail) payload.ccemail = CONFIG.ccEmail;
 
     try {
       const res = await fetch('https://api.web3forms.com/submit', {
