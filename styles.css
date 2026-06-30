@@ -599,6 +599,33 @@ body {
   color: #fff;
 }
 
+.guests {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr;
+  gap: 10px;
+}
+.guest__btn {
+  font-family: var(--body);
+  font-size: 18px;
+  color: var(--ink);
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 14px 6px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+.guest__btn:hover { border-color: var(--accent-soft); }
+.guest__btn.is-active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+@media (max-width: 560px) {
+  .guest__btn { font-size: 16px; padding: 12px 4px; }
+  .guests { gap: 7px; }
+}
+
 .btn {
   display: inline-block;
   width: 100%;

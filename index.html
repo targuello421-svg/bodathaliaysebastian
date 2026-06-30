@@ -194,6 +194,18 @@
           <input type="hidden" id="rsvp-attend" name="attend" />
         </div>
 
+        <div class="field" id="guests-field" hidden>
+          <span class="field__label">¿Vienes con acompañantes?</span>
+          <div class="guests" role="radiogroup" aria-label="Acompañantes">
+            <button type="button" class="guest__btn is-active" data-value="Solo yo" role="radio" aria-checked="true">Solo yo</button>
+            <button type="button" class="guest__btn" data-value="+1" role="radio" aria-checked="false">+1</button>
+            <button type="button" class="guest__btn" data-value="+2" role="radio" aria-checked="false">+2</button>
+            <button type="button" class="guest__btn" data-value="+3" role="radio" aria-checked="false">+3</button>
+            <button type="button" class="guest__btn" data-value="+4" role="radio" aria-checked="false">+4</button>
+          </div>
+          <input type="hidden" id="rsvp-guests" name="guests" value="Solo yo" />
+        </div>
+
         <div class="field">
           <label for="rsvp-message">Mensaje (opcional)</label>
           <textarea id="rsvp-message" name="message" rows="4" placeholder="Deja algo bonito, o divertido, o ambas."></textarea>

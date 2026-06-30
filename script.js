@@ -215,6 +215,10 @@ const QUIZ = [
   const toggleBtns = [...form.querySelectorAll('.toggle__btn')];
   const feedback = document.getElementById('rsvp-feedback');
 
+  const guestsField = document.getElementById('guests-field');
+  const guestsInput = document.getElementById('rsvp-guests');
+  const guestBtns = [...form.querySelectorAll('.guest__btn')];
+
   toggleBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
       toggleBtns.forEach((b) => {
@@ -224,6 +228,19 @@ const QUIZ = [
       btn.classList.add('is-active');
       btn.setAttribute('aria-checked', 'true');
       attendInput.value = btn.dataset.value;
+      if (guestsField) guestsField.hidden = btn.dataset.value !== 'si';
+    });
+  });
+
+  guestBtns.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      guestBtns.forEach((b) => {
+        b.classList.remove('is-active');
+        b.setAttribute('aria-checked', 'false');
+      });
+      btn.classList.add('is-active');
+      btn.setAttribute('aria-checked', 'true');
+      guestsInput.value = btn.dataset.value;
     });
   });
 
@@ -247,6 +264,7 @@ const QUIZ = [
       from_name: 'Web boda Sebastián & Thalía',
       Nombre: name,
       Asistencia: attend === 'si' ? 'Sí, ahí estaré ✅' : 'No puede ir ❌',
+      Acompañantes: attend === 'si' ? guestsInput.value : '—',
       Mensaje: message || '(sin mensaje)',
     };
 
