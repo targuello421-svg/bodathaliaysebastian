@@ -16,18 +16,20 @@
   --ink:        #2a2622;   /* casi negro cálido */
   --muted:      #6d685f;
   --faint:      #9a938a;   /* eyebrows / labels */
-  --accent:     #d97e63;   /* coral / salmón (corazón) */
-  --accent-ink: #b85d43;   /* coral más oscuro: texto/enlaces accesibles */
-  --accent-soft:#dca890;
-  --accent-wash:rgba(217,126,99,0.10);
+  --accent:     #6b7a37;   /* OLIVA fuerte — color protagonista */
+  --accent-ink: #4c5824;   /* oliva oscuro: texto/enlaces accesibles */
+  --accent-soft:#a7b07f;   /* oliva suave: líneas y bordes */
+  --accent-wash:rgba(107,122,55,0.12);
   --line:       #e8e2d7;
   --card-line:  #efe9dc;   /* borde fino de tarjetas (look premium) */
-  --taupe:      #8f897e;   /* botón primario */
+  --taupe:      #8f897e;   /* neutro cálido de apoyo */
   --taupe-dk:   #736d63;
-  --green-ink:  #3f6b3a;
-  --green-wash: rgba(143,185,138,0.16);
-  --sage:       #8aa07f;   /* verde salvia: acento secundario */
-  --sage-soft:  #b3c1a8;
+  --green-ink:  #46662f;   /* verde acierto (quiz) */
+  --green-wash: rgba(107,122,55,0.14);
+  --sage:       #8fa06a;   /* oliva salvia: acento secundario */
+  --sage-soft:  #bcc39b;
+  --berry:      #b06a4f;   /* terracota — SOLO respuestas erróneas del quiz */
+  --berry-wash: rgba(176,106,79,0.10);
 
   --shadow-sm:  0 6px 18px -10px rgba(60, 50, 40, 0.22);
   --shadow:     0 24px 55px -28px rgba(60, 50, 40, 0.32);
@@ -467,7 +469,7 @@ body {
   box-shadow: var(--shadow);
   aspect-ratio: 16 / 9;
   cursor: pointer;
-  background: #24303a;
+  background: #2f3720;
 }
 .video__placeholder {
   position: absolute;
@@ -479,8 +481,8 @@ body {
   gap: clamp(14px, 4vw, 18px);
   /* tono más templado para armonizar con el crema del resto */
   background:
-    linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.38)),
-    radial-gradient(circle at 50% 38%, #7ea9c4 0%, #4f7c9c 46%, #2b3d4c 100%);
+    linear-gradient(180deg, rgba(0,0,0,0.06), rgba(0,0,0,0.40)),
+    radial-gradient(circle at 50% 38%, #6f7d44 0%, #4a5628 46%, #2f3720 100%);
   transition: transform 0.4s ease;
 }
 .video:hover .video__placeholder { transform: scale(1.02); }
@@ -489,8 +491,8 @@ body {
   font-weight: 800;
   font-size: clamp(38px, 11vw, 78px);
   letter-spacing: 0.03em;
-  color: #f4d23a;
-  text-shadow: 2px 3px 0 rgba(0,0,0,0.28);
+  color: #e7d79b;
+  text-shadow: 2px 3px 0 rgba(0,0,0,0.32);
 }
 .video__play {
   width: clamp(58px, 15vw, 66px);
@@ -593,9 +595,9 @@ body {
   color: var(--green-ink);
 }
 .quiz-opt.wrong {
-  border-color: var(--accent);
-  background: var(--accent-wash);
-  color: var(--accent-ink);
+  border-color: var(--berry);
+  background: var(--berry-wash);
+  color: var(--berry);
 }
 .quiz__result {
   text-align: center;
@@ -747,14 +749,14 @@ body {
   transition: background 0.2s ease, transform 0.05s ease, box-shadow 0.2s ease;
 }
 .btn--primary {
-  background: linear-gradient(180deg, #99938880 0%, transparent 100%), var(--taupe);
+  background: linear-gradient(180deg, rgba(255,255,255,0.16) 0%, transparent 100%), var(--accent);
   color: #fff;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   font-size: 14px;
-  box-shadow: 0 14px 28px -14px rgba(60,50,40,0.55);
+  box-shadow: 0 14px 28px -14px rgba(50,58,28,0.55);
 }
-.btn--primary:hover { background: var(--taupe-dk); }
+.btn--primary:hover { background: var(--accent-ink); }
 .btn--primary:active { transform: scale(0.995); }
 .btn--primary:disabled { opacity: 0.7; cursor: default; }
 
