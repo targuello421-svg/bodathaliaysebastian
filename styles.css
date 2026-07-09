@@ -21,13 +21,16 @@
   --accent-soft:#dca890;
   --accent-wash:rgba(217,126,99,0.10);
   --line:       #e8e2d7;
+  --card-line:  #efe9dc;   /* borde fino de tarjetas (look premium) */
   --taupe:      #8f897e;   /* botón primario */
   --taupe-dk:   #736d63;
   --green-ink:  #3f6b3a;
   --green-wash: rgba(143,185,138,0.16);
+  --sage:       #8aa07f;   /* verde salvia: acento secundario */
+  --sage-soft:  #b3c1a8;
 
-  --shadow-sm:  0 6px 18px -10px rgba(60, 50, 40, 0.25);
-  --shadow:     0 20px 48px -24px rgba(60, 50, 40, 0.30);
+  --shadow-sm:  0 6px 18px -10px rgba(60, 50, 40, 0.22);
+  --shadow:     0 24px 55px -28px rgba(60, 50, 40, 0.32);
   --radius:     18px;
   --radius-sm:  12px;
 
@@ -146,7 +149,16 @@ body {
   margin: 0 0 16px;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
+}
+/* finas líneas decorativas a los lados del "eyebrow" */
+.eyebrow::before,
+.eyebrow::after {
+  content: "";
+  width: clamp(16px, 6vw, 26px);
+  height: 1px;
+  background: var(--sage-soft);
+  opacity: 0.8;
 }
 .eyebrow-icon { color: var(--accent-soft); }
 
@@ -159,6 +171,18 @@ body {
   margin: 0 0 10px;
   color: var(--ink);
   text-wrap: balance;
+}
+/* florón bajo los títulos de sección: dos líneas salvia + punto coral */
+.section__title::after {
+  content: "";
+  display: block;
+  width: 68px;
+  height: 8px;
+  margin: 18px auto 0;
+  background:
+    radial-gradient(circle, var(--accent) 0 3px, transparent 3.5px) center / 8px 8px no-repeat,
+    linear-gradient(var(--sage-soft), var(--sage-soft)) left center / 26px 1px no-repeat,
+    linear-gradient(var(--sage-soft), var(--sage-soft)) right center / 26px 1px no-repeat;
 }
 
 /* ============================================================
@@ -230,11 +254,29 @@ body {
 .cd-box {
   background: var(--card);
   border-radius: 14px;
+  border: 1px solid var(--card-line);
   box-shadow: var(--shadow-sm);
   padding: clamp(14px, 4vw, 20px) 4px clamp(11px, 3vw, 14px);
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.cd-num { position: relative; }
+/* fina línea salvia entre número y etiqueta */
+.cd-label {
+  position: relative;
+  padding-top: 11px;
+}
+.cd-label::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16px;
+  height: 1px;
+  background: var(--sage-soft);
+  opacity: 0.7;
 }
 .cd-num {
   font-family: var(--serif);
@@ -252,6 +294,7 @@ body {
   color: var(--faint);
   margin-top: 10px;
 }
+.cd-label { margin-top: 0; }   /* el separador salvia aporta el espaciado */
 
 .blessing { margin-top: 8px; }
 .blessing__ar {
@@ -356,9 +399,15 @@ body {
 }
 .detail-icon {
   flex: 0 0 auto;
-  color: var(--accent-soft);
+  color: var(--accent-ink);
   display: inline-flex;
-  margin-top: 3px;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--accent-wash);
+  margin-top: 2px;
 }
 .detail-title {
   font-family: var(--serif);
@@ -396,6 +445,7 @@ body {
 .card {
   background: var(--card);
   border-radius: var(--radius);
+  border: 1px solid var(--card-line);
   box-shadow: var(--shadow);
 }
 
@@ -697,9 +747,12 @@ body {
   transition: background 0.2s ease, transform 0.05s ease, box-shadow 0.2s ease;
 }
 .btn--primary {
-  background: var(--taupe);
+  background: linear-gradient(180deg, #99938880 0%, transparent 100%), var(--taupe);
   color: #fff;
-  box-shadow: 0 12px 26px -14px rgba(60,50,40,0.5);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 14px;
+  box-shadow: 0 14px 28px -14px rgba(60,50,40,0.55);
 }
 .btn--primary:hover { background: var(--taupe-dk); }
 .btn--primary:active { transform: scale(0.995); }
