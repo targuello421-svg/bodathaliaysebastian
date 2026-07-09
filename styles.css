@@ -384,7 +384,7 @@ body {
    DETALLES
    ============================================================ */
 .detalles .section__title { margin-bottom: clamp(26px, 6vw, 34px); }
-.detail-card--extra { margin-top: clamp(40px, 8vw, 60px); }
+.detail-card--extra { margin-top: clamp(56px, 11vw, 84px); }
 .detail-card {
   max-width: 560px;
   margin: 0 auto;
